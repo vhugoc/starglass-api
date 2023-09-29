@@ -2,7 +2,7 @@ package com.starglass.api.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.starglass.api.domain.address.address.Address;
+import com.starglass.api.domain.address.Address;
 import com.starglass.api.domain.merchant.Merchant;
 import com.starglass.api.infra.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -22,7 +22,6 @@ public class User extends BaseEntity<User, User.Builder> implements UserDetails 
 
     @ManyToOne
     @JoinColumn(name = "merchant_id")
-    @JsonBackReference
     private Merchant merchant;
 
     private String firstName;
