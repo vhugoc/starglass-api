@@ -1,6 +1,6 @@
 package com.starglass.api.infra.repository;
 
-import com.starglass.api.infra.entity.BaseUserEntity;
+import com.starglass.api.infra.entity.BaseMerchantEntity;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @NoRepositoryBean
 @Repository
-public interface BaseUserRepository<T extends BaseUserEntity> extends BaseRepository<T> {
+public interface BaseMerchantRepository<T extends BaseMerchantEntity> extends BaseRepository<T> {
 
     List<T> findAllByMerchantIdAndIsActiveTrue(String merchantId);
 

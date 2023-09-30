@@ -1,8 +1,8 @@
 package com.starglass.api.infra.service;
 
 import com.starglass.api.domain.user.User;
-import com.starglass.api.infra.entity.BaseUserEntity;
-import com.starglass.api.infra.repository.BaseUserRepository;
+import com.starglass.api.infra.entity.BaseMerchantEntity;
+import com.starglass.api.infra.repository.BaseMerchantRepository;
 import com.starglass.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,10 +10,10 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Optional;
 
-public class BaseUserServiceImpl<T extends BaseUserEntity, B extends BaseUserEntity.Builder> extends BaseServiceImpl<T, B> implements BaseUserService<T, B> {
+public class BaseMerchantServiceImpl<T extends BaseMerchantEntity, B extends BaseMerchantEntity.Builder> extends BaseServiceImpl<T, B> implements BaseMerchantService<T, B> {
 
     @Autowired
-    private BaseUserRepository<T> repository;
+    private BaseMerchantRepository<T> repository;
 
     @Autowired
     TokenService tokenService;
@@ -44,7 +44,7 @@ public class BaseUserServiceImpl<T extends BaseUserEntity, B extends BaseUserEnt
     @Override
     public BaseServiceResponse<T> save(B entityBuilder) {
         User user = tokenService.getAuthenticatedUserFromContext();
-        return super.save((B) entityBuilder.withUser(user));
+        return super.save((B) entityBuilder.withMerchant(user.getMerchant()));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class BaseUserServiceImpl<T extends BaseUserEntity, B extends BaseUserEnt
         User user = tokenService.getAuthenticatedUserFromContext();
         Optional<T> entity = repository.findByIdAndMerchantId(id, user.getId());
         if (entity.isPresent()) {
-            return super.update(id, (B) entityBuilder.withUser(user));
+            return super.update(id, (B) entityBuilder.withMerchant(user.getMerchant()));
         } else {
             return BaseServiceResponse.<T>builder()
                     .withStatusCode(HttpStatus.BAD_REQUEST)
