@@ -24,6 +24,8 @@ public abstract class BaseMerchantEntity<T extends BaseMerchantEntity, B extends
         this.merchant = builder.merchant;
     }
 
+    public abstract BaseMerchantEntity.Builder toBuilder();
+
     @Getter
     public abstract static class Builder<T extends BaseMerchantEntity, B extends Builder> extends BaseEntity.Builder<T, B> {
 

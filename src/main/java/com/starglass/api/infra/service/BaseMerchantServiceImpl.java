@@ -50,7 +50,7 @@ public class BaseMerchantServiceImpl<T extends BaseMerchantEntity, B extends Bas
     @Override
     public BaseServiceResponse<T> update(String id, B entityBuilder) {
         User user = tokenService.getAuthenticatedUserFromContext();
-        Optional<T> entity = repository.findByIdAndMerchantId(id, user.getId());
+        Optional<T> entity = repository.findByIdAndMerchantId(id, user.getMerchant().getId());
         if (entity.isPresent()) {
             return super.update(id, (B) entityBuilder.withMerchant(user.getMerchant()));
         } else {

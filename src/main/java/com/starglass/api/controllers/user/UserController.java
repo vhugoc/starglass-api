@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(RestURL.USER)
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(RestURL.USER_PROFILE)
     public ResponseEntity<BaseServiceResponse<User>> getProfile() {

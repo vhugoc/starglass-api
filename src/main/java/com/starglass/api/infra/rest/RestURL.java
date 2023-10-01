@@ -14,4 +14,8 @@ public class RestURL {
 
     public static final String USER_PROFILE = "/profile";
 
+    public static final String PRODUCT_MATERIAL = "/product/material";
+
+    public static final String PRODUCT = "/product";
+
 }

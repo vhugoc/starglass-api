@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(RestURL.MERCHANT)
 public class MerchantController extends BaseCrud<Merchant, Merchant.Builder> {
 
-    @Autowired
-    MerchantRepository merchantRepository;
+    private final MerchantRepository merchantRepository;
 
     @Autowired
-    public MerchantController(MerchantService merchantService) {
+    public MerchantController(MerchantRepository merchantRepository, MerchantService merchantService) {
         super(merchantService);
+        this.merchantRepository = merchantRepository;
     }
 
 }
