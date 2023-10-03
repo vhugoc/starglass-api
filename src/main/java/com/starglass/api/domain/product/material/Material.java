@@ -5,6 +5,7 @@ import com.starglass.api.infra.entity.BaseMerchantEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
@@ -18,7 +19,7 @@ public class Material extends BaseMerchantEntity<Material, Material.Builder> {
     @Enumerated(EnumType.STRING)
     private MaterialType type;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
     @Enumerated(EnumType.STRING)
@@ -57,14 +58,17 @@ public class Material extends BaseMerchantEntity<Material, Material.Builder> {
     @Getter
     public static class Builder extends BaseMerchantEntity.Builder<Material, Builder> {
 
+        @NotNull
         private MaterialType type;
 
+        @NotEmpty
         private String name;
 
         private MaterialColor color;
 
         private String thickness;
 
+        @NotNull
         private Float value;
 
         public Builder() {
@@ -85,6 +89,11 @@ public class Material extends BaseMerchantEntity<Material, Material.Builder> {
 
         public Material build() {
             return new Material(this);
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
         }
 
     }

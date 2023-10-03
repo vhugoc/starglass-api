@@ -153,6 +153,11 @@ public class User extends BaseEntity<User, User.Builder> implements UserDetails 
             return new User(this);
         }
 
+        public Builder withMerchant(Merchant merchant) {
+            this.merchant = merchant;
+            return this;
+        }
+
         public Builder withPassword(String password) {
             this.password = password;
             return this;

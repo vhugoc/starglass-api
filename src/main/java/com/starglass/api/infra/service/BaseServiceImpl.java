@@ -1,7 +1,9 @@
 package com.starglass.api.infra.service;
 
 import com.starglass.api.infra.entity.BaseEntity;
+import com.starglass.api.infra.entity.EntityValidator;
 import com.starglass.api.infra.exception.custom.RestException;
+import com.starglass.api.infra.exception.custom.ValidationException;
 import com.starglass.api.infra.repository.BaseRepository;
 import com.starglass.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
 
     @Autowired
     TokenService tokenService;
+
+    @Autowired
+    EntityValidator<T> entityValidator;
 
     @Override
     public BaseServiceResponse<List<T>> findAll() {
@@ -43,11 +48,14 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
     public BaseServiceResponse<T> save(B entityBuilder) {
         T entity = (T) entityBuilder.withIsActive(true).build();
         try {
+            entityValidator.validate(entity);
             T saved = repository.save(entity);
             return BaseServiceResponse.<T>builder()
                     .withStatusCode(HttpStatus.CREATED)
                     .withData(saved)
                     .build();
+        } catch (ValidationException e) {
+            throw new ValidationException(e.getMessage());
         } catch (Exception e) {
             throw new RestException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -57,15 +65,15 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
     public BaseServiceResponse<T> update(String id, B entityBuilder) {
         T entity = (T) entityBuilder.withId(id).build();
         try {
-            if (entity == null || entity.getId() == null)
-                throw new RestException("Not found", HttpStatus.BAD_REQUEST);
-
+            if (entity == null || entity.getId() == null) throw new RestException("Not found", HttpStatus.BAD_REQUEST);
+            entityValidator.validate(entity);
             T updated = repository.save(entity);
-
             return BaseServiceResponse.<T>builder()
                     .withStatusCode(HttpStatus.OK)
                     .withData(updated)
                     .build();
+        } catch (ValidationException e) {
+            throw new ValidationException(e.getMessage());
         } catch (Exception e) {
             throw new RestException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
