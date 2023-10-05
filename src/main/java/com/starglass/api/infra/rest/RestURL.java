@@ -18,4 +18,6 @@ public class RestURL {
 
     public static final String PRODUCT = "/product";
 
+    public static final String CUSTOMER = "/customer";
+
 }
