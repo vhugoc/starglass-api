@@ -22,9 +22,12 @@ CREATE TABLE product (
 );
 
 CREATE TABLE product_materials (
-    product_fk TEXT,
-    material_fk TEXT,
-    FOREIGN KEY (product_fk) REFERENCES product(id),
-    FOREIGN KEY (material_fk) REFERENCES material(id),
-    PRIMARY KEY (product_fk, material_fk)
+    id TEXT UNIQUE NOT NULL PRIMARY KEY,
+    merchant_id TEXT NOT NULL references merchant(id),
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    is_active BOOLEAN DEFAULT true,
+    product_id TEXT NOT NULL references product(id),
+    material_id TEXT NOT NULL references material(id),
+    quantity INT DEFAULT 1
 );

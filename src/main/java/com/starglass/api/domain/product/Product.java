@@ -2,12 +2,9 @@ package com.starglass.api.domain.product;
 
 import com.google.common.collect.Lists;
 import com.starglass.api.domain.merchant.Merchant;
-import com.starglass.api.domain.product.material.Material;
+import com.starglass.api.domain.product.productmaterial.ProductMaterial;
 import com.starglass.api.infra.entity.BaseMerchantEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,13 +21,8 @@ public class Product extends BaseMerchantEntity<Product, Product.Builder> {
 
     private String description;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_materials",
-            joinColumns = @JoinColumn(name = "product_fk"),
-            inverseJoinColumns = @JoinColumn(name = "material_fk")
-    )
-    private List<Material> materials = Lists.newLinkedList();
+    @OneToMany(mappedBy = "product")
+    private List<ProductMaterial> materials = Lists.newLinkedList();
 
     public Product() {
     }
@@ -62,7 +54,7 @@ public class Product extends BaseMerchantEntity<Product, Product.Builder> {
 
         private String description;
 
-        private List<Material> materials = Lists.newLinkedList();
+        private List<ProductMaterial> materials = Lists.newLinkedList();
 
         public Builder() {
         }
