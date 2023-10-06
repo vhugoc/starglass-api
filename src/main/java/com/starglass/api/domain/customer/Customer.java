@@ -1,6 +1,6 @@
 package com.starglass.api.domain.customer;
 
-import com.starglass.api.domain.address.Address;
+import com.starglass.api.args.Address;
 import com.starglass.api.domain.merchant.Merchant;
 import com.starglass.api.infra.entity.BaseMerchantEntity;
 import jakarta.persistence.Entity;
