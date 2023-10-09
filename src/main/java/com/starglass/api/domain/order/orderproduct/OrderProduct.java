@@ -2,19 +2,14 @@ package com.starglass.api.domain.order.orderproduct;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.starglass.api.args.Dimensions;
-import com.starglass.api.args.Address;
 import com.starglass.api.domain.merchant.Merchant;
 import com.starglass.api.domain.order.Order;
 import com.starglass.api.domain.product.Product;
 import com.starglass.api.infra.entity.BaseMerchantEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
-
-import java.util.Date;
 
 @Entity
 @Getter
@@ -41,6 +36,7 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
 
     protected OrderProduct(Builder builder) {
         super(builder);
+        this.order = builder.order;
         this.product = builder.product;
         this.quantity = builder.quantity;
         this.dimensions = builder.dimensions;
@@ -64,6 +60,8 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
     @Getter
     public static class Builder extends BaseMerchantEntity.Builder<OrderProduct, Builder> {
 
+        private Order order;
+
         private Product product;
 
         private int quantity;
@@ -83,6 +81,7 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
 
         public Builder(OrderProduct orderProduct) {
             super(orderProduct);
+            this.order = orderProduct.order;
             this.product = orderProduct.product;
             this.quantity = orderProduct.quantity;
             this.dimensions = orderProduct.dimensions;

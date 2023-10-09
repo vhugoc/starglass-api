@@ -11,6 +11,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @ToString
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builder> {
 
     @NotNull

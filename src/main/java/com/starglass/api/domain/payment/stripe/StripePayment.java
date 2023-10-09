@@ -2,7 +2,7 @@ package com.starglass.api.domain.payment.stripe;
 
 import com.starglass.api.domain.merchant.Merchant;
 import com.starglass.api.domain.payment.Payment;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.ToString;
 

@@ -23,7 +23,7 @@ import java.util.List;
 @ToString
 public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderProduct> products = Lists.newLinkedList();
 
     @ManyToOne
