@@ -5,25 +5,22 @@ import com.starglass.api.args.Address;
 import com.starglass.api.domain.customer.Customer;
 import com.starglass.api.domain.merchant.Merchant;
 import com.starglass.api.domain.order.orderproduct.OrderProduct;
-import com.starglass.api.domain.payment.Payment;
-import com.starglass.api.domain.payment.PaymentStatus;
+import com.starglass.api.domain.payment.stripe.StripePayment;
 import com.starglass.api.infra.entity.BaseMerchantEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
+@Entity(name = "orders")
 @Getter
 @ToString
 public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> products = Lists.newLinkedList();
 
     @ManyToOne
@@ -40,22 +37,22 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
     private Float discount = 0F;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Payment payment;
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private StripePayment payment;
 
     public Order() {
     }
 
     protected Order(Builder builder) {
         super(builder);
-        this.products = builder.products;
+        this.products = builder.products.stream().map(p -> p.withOrder(this).build()).collect(Collectors.toList());
         this.customer = builder.customer;
         this.status = builder.status;
         this.installDate = builder.installDate;
         this.installAddress = builder.installAddress;
         this.profitMargin = builder.profitMargin;
         this.discount = builder.discount;
-        this.payment = builder.payment;
+        this.payment = builder.payment.withOrder(this).build();
     }
 
     @Override
@@ -74,7 +71,7 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
     @Getter
     public static class Builder extends BaseMerchantEntity.Builder<Order, Builder> {
 
-        private List<OrderProduct> products = Lists.newLinkedList();
+        private List<OrderProduct.Builder> products = Lists.newLinkedList();
 
         private Customer customer;
 
@@ -89,7 +86,7 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
         private Float discount = 0F;
 
-        private Payment payment;
+        private StripePayment.Builder payment;
 
         public Builder() {
         }
@@ -100,14 +97,14 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
         public Builder(Order order) {
             super(order);
-            this.products = order.products;
+            this.products = order.products.stream().map(OrderProduct::toBuilder).collect(Collectors.toList());
             this.customer = order.customer;
             this.status = order.status;
             this.installDate = order.installDate;
             this.installAddress = order.installAddress;
             this.profitMargin = order.profitMargin;
             this.discount = order.discount;
-            this.payment = order.payment;
+            this.payment = order.payment.toBuilder();
         }
 
         public Order build() {

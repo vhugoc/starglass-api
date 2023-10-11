@@ -1,7 +1,8 @@
 package com.starglass.api.domain.payment;
 
-import com.starglass.api.domain.merchant.Merchant;
-import com.starglass.api.infra.entity.BaseMerchantEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.starglass.api.domain.order.Order;
+import com.starglass.api.infra.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +13,11 @@ import lombok.ToString;
 @Getter
 @ToString
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builder> {
+public abstract class Payment extends BaseEntity<Payment, Payment.Builder> {
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Order order;
 
     @NotNull
     private PaymentStatus status;
@@ -20,7 +25,6 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
     @NotNull
     private PaymentType type;
 
-    @NotEmpty
     private Float value;
 
     private String link;
@@ -30,6 +34,7 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
 
     protected Payment(Builder builder) {
         super(builder);
+        this.order = builder.order;
         this.status = builder.status;
         this.type = builder.type;
         this.value = builder.value;
@@ -40,7 +45,9 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
     public abstract Builder toBuilder();
 
     @Getter
-    public abstract static class Builder extends BaseMerchantEntity.Builder<Payment, Builder> {
+    public abstract static class Builder extends BaseEntity.Builder<Payment, Builder> {
+
+        private Order order;
 
         @NotNull
         private PaymentStatus status;
@@ -56,12 +63,9 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
         public Builder() {
         }
 
-        public Builder(Merchant merchant) {
-            super(merchant);
-        }
-
         public Builder(Payment payment) {
             super(payment);
+            this.order = payment.order;
             this.status = payment.status;
             this.type = payment.type;
             this.value = payment.value;
@@ -69,6 +73,11 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
         }
 
         public abstract Payment build();
+
+        public Builder withOrder(Order order) {
+            this.order = order;
+            return this;
+        }
 
     }
 
