@@ -1,5 +1,6 @@
 CREATE TABLE payment (
     id TEXT UNIQUE NOT NULL PRIMARY KEY,
+    merchant_id TEXT NOT NULL references merchant(id),
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     is_active BOOLEAN DEFAULT true,
@@ -33,6 +34,7 @@ CREATE TABLE orders (
 
 CREATE TABLE order_product (
     id TEXT UNIQUE NOT NULL PRIMARY KEY,
+    merchant_id TEXT NOT NULL references merchant(id),
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     is_active BOOLEAN DEFAULT true,

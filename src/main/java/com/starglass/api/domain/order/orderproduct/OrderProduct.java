@@ -2,12 +2,12 @@ package com.starglass.api.domain.order.orderproduct;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.starglass.api.args.Dimensions;
+import com.starglass.api.domain.merchant.Merchant;
 import com.starglass.api.domain.order.Order;
 import com.starglass.api.domain.product.Product;
-import com.starglass.api.infra.entity.BaseEntity;
+import com.starglass.api.infra.entity.BaseMerchantEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,7 +15,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @ToString
-public class OrderProduct extends BaseEntity<OrderProduct, OrderProduct.Builder> {
+public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.Builder> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -50,12 +50,16 @@ public class OrderProduct extends BaseEntity<OrderProduct, OrderProduct.Builder>
         return new Builder(this);
     }
 
+    public static OrderProduct.Builder of(Merchant merchant) {
+        return new OrderProduct.Builder(merchant);
+    }
+
     public static Builder of(OrderProduct order) {
         return new Builder(order);
     }
 
     @Getter
-    public static class Builder extends BaseEntity.Builder<OrderProduct, Builder> {
+    public static class Builder extends BaseMerchantEntity.Builder<OrderProduct, Builder> {
 
         private Order order;
 
@@ -65,7 +69,15 @@ public class OrderProduct extends BaseEntity<OrderProduct, OrderProduct.Builder>
 
         private Dimensions dimensions;
 
+        private Float unitValue;
+
+        private Float totalValue;
+
         public Builder() {
+        }
+
+        public Builder(Merchant merchant) {
+            super(merchant);
         }
 
         public Builder(OrderProduct orderProduct) {
@@ -77,11 +89,25 @@ public class OrderProduct extends BaseEntity<OrderProduct, OrderProduct.Builder>
         }
 
         public OrderProduct build() {
+            throw new RuntimeException("Should build with order");
+        }
+
+        public OrderProduct build(Order order) {
+            this.order = order;
+            this.withMerchant(order.getMerchant());
             return new OrderProduct(this);
         }
 
-        public Builder withOrder(Order order) {
-            this.order = order;
+        public void sumUnitValue(Float value) {
+            this.unitValue += value;
+        }
+
+        public void calculateTotalValue() {
+            this.totalValue = this.unitValue * this.quantity;
+        }
+
+        public Builder withUnitValue(Float unitValue) {
+            this.unitValue = unitValue;
             return this;
         }
 

@@ -1,5 +1,6 @@
 package com.starglass.api.domain.payment.stripe;
 
+import com.starglass.api.domain.merchant.Merchant;
 import com.starglass.api.domain.order.Order;
 import com.starglass.api.domain.payment.Payment;
 import jakarta.persistence.DiscriminatorValue;
@@ -40,12 +41,14 @@ public class StripePayment extends Payment {
         }
 
         public StripePayment build() {
-            return new StripePayment(this);
+            throw new RuntimeException("Should build with order");
         }
 
-        public Builder withOrder(Order order) {
-            super.withOrder(order);
-            return this;
+        @Override
+        public StripePayment build(Order order) {
+            this.order = order;
+            this.withMerchant(order.getMerchant());
+            return new StripePayment(this);
         }
 
     }

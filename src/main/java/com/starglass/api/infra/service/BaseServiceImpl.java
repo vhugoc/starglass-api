@@ -24,6 +24,16 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
     EntityValidator<T> entityValidator;
 
     @Override
+    public B beforeSave(B entityBuilder) {
+        return entityBuilder;
+    }
+
+    @Override
+    public T afterSave(T saved) {
+        return saved;
+    }
+
+    @Override
     public BaseServiceResponse<List<T>> findAll() {
         List<T> list = repository.findAllByIsActiveTrue();
         return BaseServiceResponse.<List<T>>builder()
@@ -46,10 +56,12 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
 
     @Override
     public BaseServiceResponse<T> save(B entityBuilder) {
+        entityBuilder = this.beforeSave(entityBuilder);
         T entity = (T) entityBuilder.withIsActive(true).build();
         try {
             entityValidator.validate(entity);
             T saved = repository.save(entity);
+            saved = this.afterSave(saved);
             return BaseServiceResponse.<T>builder()
                     .withStatusCode(HttpStatus.CREATED)
                     .withData(saved)
@@ -63,11 +75,13 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
 
     @Override
     public BaseServiceResponse<T> update(String id, B entityBuilder) {
+        entityBuilder = this.beforeSave(entityBuilder);
         T entity = (T) entityBuilder.withId(id).build();
         try {
             if (entity == null || entity.getId() == null) throw new RestException("Not found", HttpStatus.BAD_REQUEST);
             entityValidator.validate(entity);
             T updated = repository.save(entity);
+            updated = this.afterSave(entity);
             return BaseServiceResponse.<T>builder()
                     .withStatusCode(HttpStatus.OK)
                     .withData(updated)

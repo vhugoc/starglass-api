@@ -8,6 +8,10 @@ import java.util.List;
 @Service
 public interface BaseService<T extends BaseEntity, B extends BaseEntity.Builder> {
 
+    B beforeSave(B entityBuilder);
+
+    T afterSave(T saved);
+
     BaseServiceResponse<List<T>> findAll();
 
     BaseServiceResponse<T> findById(String id);

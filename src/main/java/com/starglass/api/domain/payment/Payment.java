@@ -2,7 +2,7 @@ package com.starglass.api.domain.payment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.starglass.api.domain.order.Order;
-import com.starglass.api.infra.entity.BaseEntity;
+import com.starglass.api.infra.entity.BaseMerchantEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Payment extends BaseEntity<Payment, Payment.Builder> {
+public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builder> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -45,20 +45,20 @@ public abstract class Payment extends BaseEntity<Payment, Payment.Builder> {
     public abstract Builder toBuilder();
 
     @Getter
-    public abstract static class Builder extends BaseEntity.Builder<Payment, Builder> {
+    public abstract static class Builder extends BaseMerchantEntity.Builder<Payment, Builder> {
 
-        private Order order;
-
-        @NotNull
-        private PaymentStatus status;
+        protected Order order;
 
         @NotNull
-        private PaymentType type;
+        protected PaymentStatus status;
+
+        @NotNull
+        protected PaymentType type;
 
         @NotEmpty
-        private Float value;
+        protected Float value;
 
-        private String link;
+        protected String link;
 
         public Builder() {
         }
@@ -72,12 +72,7 @@ public abstract class Payment extends BaseEntity<Payment, Payment.Builder> {
             this.link = payment.link;
         }
 
-        public abstract Payment build();
-
-        public Builder withOrder(Order order) {
-            this.order = order;
-            return this;
-        }
+        public abstract Payment build(Order order);
 
     }
 

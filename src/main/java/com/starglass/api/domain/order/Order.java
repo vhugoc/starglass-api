@@ -45,14 +45,14 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
     protected Order(Builder builder) {
         super(builder);
-        this.products = builder.products.stream().map(p -> p.withOrder(this).build()).collect(Collectors.toList());
+        this.products = builder.products.stream().map(p -> p.build(this)).collect(Collectors.toList());
         this.customer = builder.customer;
         this.status = builder.status;
         this.installDate = builder.installDate;
         this.installAddress = builder.installAddress;
         this.profitMargin = builder.profitMargin;
         this.discount = builder.discount;
-        this.payment = builder.payment.withOrder(this).build();
+        this.payment = builder.payment.build(this);
     }
 
     @Override
