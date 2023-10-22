@@ -111,6 +111,14 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
             return new Order(this);
         }
 
+        public Float getTotalValue() {
+            Float value = 0F;
+            for (OrderProduct.Builder orderProduct : this.products) {
+                value += orderProduct.getTotalValue();
+            }
+            return value;
+        }
+
     }
 
 }

@@ -46,8 +46,8 @@ public class StripePayment extends Payment {
 
         @Override
         public StripePayment build(Order order) {
-            this.order = order;
             this.withMerchant(order.getMerchant());
+            this.order = order;
             return new StripePayment(this);
         }
 

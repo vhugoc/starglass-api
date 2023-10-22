@@ -74,6 +74,11 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
 
         public abstract Payment build(Order order);
 
+        public Builder withValue(Float value) {
+            this.value = value;
+            return this;
+        }
+
     }
 
 }

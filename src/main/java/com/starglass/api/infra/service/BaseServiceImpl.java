@@ -24,16 +24,6 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
     EntityValidator<T> entityValidator;
 
     @Override
-    public B beforeSave(B entityBuilder) {
-        return entityBuilder;
-    }
-
-    @Override
-    public T afterSave(T saved) {
-        return saved;
-    }
-
-    @Override
     public BaseServiceResponse<List<T>> findAll() {
         List<T> list = repository.findAllByIsActiveTrue();
         return BaseServiceResponse.<List<T>>builder()
@@ -108,6 +98,16 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
         } catch (Exception e) {
             throw new RestException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public B beforeSave(B entityBuilder) {
+        return entityBuilder;
+    }
+
+    @Override
+    public T afterSave(T saved) {
+        return saved;
     }
 
 }

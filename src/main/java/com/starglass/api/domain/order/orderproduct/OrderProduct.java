@@ -41,8 +41,8 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
         this.product = builder.product;
         this.quantity = builder.quantity;
         this.dimensions = builder.dimensions;
-        this.unitValue = 0F;
-        this.totalValue = 0F;
+        this.unitValue = builder.unitValue;
+        this.totalValue = builder.totalValue;
     }
 
     @Override
