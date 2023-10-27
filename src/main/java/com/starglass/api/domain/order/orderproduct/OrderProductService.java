@@ -1,12 +1,10 @@
 package com.starglass.api.domain.order.orderproduct;
 
-import com.starglass.api.domain.product.Product;
 import com.starglass.api.domain.product.ProductService;
 import com.starglass.api.domain.product.material.Material;
 import com.starglass.api.domain.product.material.MaterialType;
 import com.starglass.api.domain.product.productmaterial.ProductMaterial;
 import com.starglass.api.infra.service.BaseMerchantServiceImpl;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
