@@ -11,4 +11,9 @@ public class Dimensions {
 
     private Float width;
 
+    public Float getLargestDimension() {
+        if (this.width > this.height) return this.width;
+        return this.height;
+    }
+
 }

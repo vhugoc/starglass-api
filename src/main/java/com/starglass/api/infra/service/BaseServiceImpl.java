@@ -47,7 +47,7 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
     @Override
     public BaseServiceResponse<T> save(B entityBuilder) {
         entityBuilder = this.beforeSave(entityBuilder);
-        T entity = (T) entityBuilder.withIsActive(true).build();
+        T entity = (T) entityBuilder.build();
         try {
             entityValidator.validate(entity);
             T saved = repository.save(entity);

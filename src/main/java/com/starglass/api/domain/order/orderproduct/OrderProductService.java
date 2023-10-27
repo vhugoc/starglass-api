@@ -20,19 +20,16 @@ public class OrderProductService extends BaseMerchantServiceImpl<OrderProduct, O
         this.productService = productService;
     }
 
-    public List<OrderProduct.Builder> calculate(List<OrderProduct.Builder> orderProducts) {
+    public void calculate(List<OrderProduct.Builder> orderProducts) {
         for (OrderProduct.Builder orderProduct : orderProducts) {
             List<ProductMaterial> productMaterials = productService.findAllProductMaterials(orderProduct.getProduct().getId());
             orderProduct.withUnitValue(0F);
             for (ProductMaterial productMaterial : productMaterials) {
                 Material material = productMaterial.getMaterial();
-                if (material.getType().equals(MaterialType.DEFAULT_GLASS)) {
-                    orderProduct.sumUnitValue(productMaterial.getQuantity() * ((orderProduct.getDimensions().getWidth() / 1000) * (orderProduct.getDimensions().getHeight() / 1000)) * material.getValue());
-                }
+                orderProduct.sumUnitValue(material.getType().calculate(productMaterial, orderProduct.getDimensions()));
             }
             orderProduct.calculateTotalValue();
         }
-        return orderProducts;
     }
 
 }
