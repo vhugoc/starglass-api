@@ -7,9 +7,12 @@ import com.starglass.api.domain.product.productmaterial.ProductMaterialService;
 import com.starglass.api.infra.exception.custom.RestException;
 import com.starglass.api.infra.service.BaseMerchantServiceImpl;
 import com.starglass.api.infra.service.BaseServiceResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProductService extends BaseMerchantServiceImpl<Product, Product.Builder> {
@@ -44,6 +47,10 @@ public class ProductService extends BaseMerchantServiceImpl<Product, Product.Bui
         }
 
         return savedProduct;
+    }
+
+    public List<ProductMaterial> findAllProductMaterials(String id) {
+        return this.findById(id).getData().getMaterials();
     }
 
 }

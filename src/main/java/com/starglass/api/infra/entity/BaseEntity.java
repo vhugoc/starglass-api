@@ -26,7 +26,7 @@ public abstract class BaseEntity<T extends BaseEntity, B extends BaseEntity.Buil
     @LastModifiedDate
     protected Date updatedAt;
 
-    protected boolean isActive;
+    protected boolean isActive = true;
 
     protected BaseEntity() {
     }
@@ -53,7 +53,7 @@ public abstract class BaseEntity<T extends BaseEntity, B extends BaseEntity.Buil
 
         private Date updatedAt;
 
-        private boolean isActive;
+        private boolean isActive = true;
 
         protected Builder() {
         }

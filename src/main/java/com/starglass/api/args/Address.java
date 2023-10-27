@@ -1,4 +1,4 @@
-package com.starglass.api.domain.address;
+package com.starglass.api.args;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;

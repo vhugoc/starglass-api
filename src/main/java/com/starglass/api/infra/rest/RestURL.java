@@ -20,4 +20,6 @@ public class RestURL {
 
     public static final String CUSTOMER = "/customer";
 
+    public static final String ORDER = "/order";
+
 }
