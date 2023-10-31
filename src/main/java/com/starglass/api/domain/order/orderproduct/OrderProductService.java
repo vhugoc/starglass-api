@@ -2,7 +2,6 @@ package com.starglass.api.domain.order.orderproduct;
 
 import com.starglass.api.domain.product.ProductService;
 import com.starglass.api.domain.product.material.Material;
-import com.starglass.api.domain.product.material.MaterialType;
 import com.starglass.api.domain.product.productmaterial.ProductMaterial;
 import com.starglass.api.infra.service.BaseMerchantServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

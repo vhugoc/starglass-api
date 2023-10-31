@@ -27,6 +27,8 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
 
     private Float value;
 
+    private Float rawValue;
+
     private String link;
 
     public Payment() {
@@ -38,6 +40,7 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
         this.status = builder.status;
         this.type = builder.type;
         this.value = builder.value;
+        this.rawValue = builder.rawValue;
         this.link = builder.link;
     }
 
@@ -58,6 +61,9 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
         @NotEmpty
         protected Float value;
 
+        @NotEmpty
+        private Float rawValue;
+
         protected String link;
 
         public Builder() {
@@ -69,6 +75,7 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
             this.status = payment.status;
             this.type = payment.type;
             this.value = payment.value;
+            this.rawValue = payment.rawValue;
             this.link = payment.link;
         }
 
@@ -76,6 +83,11 @@ public abstract class Payment extends BaseMerchantEntity<Payment, Payment.Builde
 
         public Builder withValue(Float value) {
             this.value = value;
+            return this;
+        }
+
+        public Builder withRawValue(Float rawValue) {
+            this.rawValue = rawValue;
             return this;
         }
 

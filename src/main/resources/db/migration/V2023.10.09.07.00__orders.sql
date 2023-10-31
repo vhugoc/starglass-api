@@ -7,6 +7,7 @@ CREATE TABLE payment (
     status TEXT NOT NULL,
     type TEXT NOT NULL,
     value FLOAT DEFAULT 0,
+    raw_value FLOAT DEFAULT 0,
     link TEXT DEFAULT NULL,
     dtype TEXT
 );
