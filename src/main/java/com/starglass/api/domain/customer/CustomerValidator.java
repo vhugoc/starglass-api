@@ -2,9 +2,6 @@ package com.starglass.api.domain.customer;
 
 import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
-import com.starglass.api.domain.product.material.Material;
-import com.starglass.api.domain.product.material.MaterialRepository;
-import com.starglass.api.domain.product.material.QMaterial;
 import com.starglass.api.domain.user.User;
 import com.starglass.api.infra.entity.EntityValidator;
 import com.starglass.api.infra.exception.custom.ValidationException;
