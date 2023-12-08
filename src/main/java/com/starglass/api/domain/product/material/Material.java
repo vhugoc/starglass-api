@@ -91,11 +91,6 @@ public class Material extends BaseMerchantEntity<Material, Material.Builder> {
             return new Material(this);
         }
 
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
     }
 
 }

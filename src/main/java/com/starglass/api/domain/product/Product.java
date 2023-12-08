@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -21,7 +22,7 @@ public class Product extends BaseMerchantEntity<Product, Product.Builder> {
 
     private String description;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductMaterial> materials = Lists.newLinkedList();
 
     public Product() {
@@ -31,7 +32,7 @@ public class Product extends BaseMerchantEntity<Product, Product.Builder> {
         super(builder);
         this.name = builder.name;
         this.description = builder.description;
-        this.materials = builder.materials;
+        this.materials = builder.materials.stream().map(pm -> pm.build(this)).collect(Collectors.toList());
     }
 
     @Override
@@ -54,7 +55,7 @@ public class Product extends BaseMerchantEntity<Product, Product.Builder> {
 
         private String description;
 
-        private List<ProductMaterial> materials = Lists.newLinkedList();
+        private List<ProductMaterial.Builder> materials = Lists.newLinkedList();
 
         public Builder() {
         }
@@ -67,7 +68,7 @@ public class Product extends BaseMerchantEntity<Product, Product.Builder> {
             super(product);
             this.name = product.name;
             this.description = product.description;
-            this.materials = product.materials;
+            this.materials = product.materials.stream().map(ProductMaterial::toBuilder).collect(Collectors.toList());
         }
 
         public Product build() {

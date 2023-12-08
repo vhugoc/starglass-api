@@ -1,6 +1,5 @@
 package com.starglass.api.domain.customer;
 
-import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
 import com.starglass.api.domain.user.User;
 import com.starglass.api.infra.entity.EntityValidator;
@@ -8,8 +7,6 @@ import com.starglass.api.infra.exception.custom.ValidationException;
 import com.starglass.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CustomerValidator implements EntityValidator<Customer> {
@@ -37,7 +34,6 @@ public class CustomerValidator implements EntityValidator<Customer> {
         BooleanBuilder queryBuilder = new BooleanBuilder();
 
         queryBuilder.and(qCustomer.merchant.eq(authenticatedUser.getMerchant()));
-        queryBuilder.and(qCustomer.phone.eq(entity.getPhone()));
 
         if (entity.getEmail() != null) {
             queryBuilder.and(qCustomer.phone.eq(entity.getPhone()).or(qCustomer.email.eq(entity.getEmail())));
@@ -47,9 +43,8 @@ public class CustomerValidator implements EntityValidator<Customer> {
 
         if (isUpdate) queryBuilder.and(qCustomer.id.ne(entity.getId()));
 
-        List<Customer> list = Lists.newArrayList(this.customerRepository.findAll(queryBuilder));
-
-        if (!list.isEmpty()) throw new ValidationException("This customer already exists");
+        if (this.customerRepository.count(queryBuilder) > 0)
+            throw new ValidationException("This customer already exists");
 
     }
 

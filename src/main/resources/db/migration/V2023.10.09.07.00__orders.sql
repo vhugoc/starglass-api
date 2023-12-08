@@ -47,5 +47,3 @@ CREATE TABLE order_product (
     unit_value FLOAT NOT NULL,
     total_value FLOAT NOT NULL
 );
-
-ALTER TABLE payment ADD COLUMN order_id TEXT DEFAULT NULL references orders(id);

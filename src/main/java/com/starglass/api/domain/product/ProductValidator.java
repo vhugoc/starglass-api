@@ -1,6 +1,5 @@
 package com.starglass.api.domain.product;
 
-import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
 import com.starglass.api.domain.user.User;
 import com.starglass.api.infra.entity.EntityValidator;
@@ -8,8 +7,6 @@ import com.starglass.api.infra.exception.custom.ValidationException;
 import com.starglass.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductValidator implements EntityValidator<Product> {
@@ -41,9 +38,8 @@ public class ProductValidator implements EntityValidator<Product> {
 
         if (isUpdate) queryBuilder.and(qProduct.id.ne(entity.getId()));
 
-        List<Product> list = Lists.newArrayList(this.productRepository.findAll(queryBuilder));
-
-        if (!list.isEmpty()) throw new ValidationException("This product already exists");
+        if (this.productRepository.count(queryBuilder) > 0)
+            throw new ValidationException("This product already exists");
 
     }
 

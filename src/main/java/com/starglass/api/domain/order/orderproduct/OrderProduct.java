@@ -9,6 +9,7 @@ import com.starglass.api.infra.entity.BaseMerchantEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,7 +25,7 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
     @ManyToOne
     private Product product;
 
-    private int quantity = 1;
+    private Integer quantity = 1;
 
     private Dimensions dimensions;
 
@@ -65,7 +66,7 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
 
         private Product product;
 
-        private int quantity;
+        private Integer quantity;
 
         private Dimensions dimensions;
 
