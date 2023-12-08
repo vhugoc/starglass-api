@@ -5,8 +5,6 @@ import com.starglass.api.infra.service.BaseMerchantServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class OrderService extends BaseMerchantServiceImpl<Order, Order.Builder> {
 
@@ -25,6 +23,7 @@ public class OrderService extends BaseMerchantServiceImpl<Order, Order.Builder> 
             totalValue = calculateProfitMargin(totalValue, builder.getProfitMargin());
         if (builder.getDiscount() > 0)
             totalValue = calculateDiscount(totalValue, builder.getDiscount());
+        builder.getPayment().withRawValue(builder.getTotalValue());
         builder.getPayment().withValue(totalValue);
         return builder;
     }

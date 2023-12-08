@@ -5,7 +5,7 @@ import com.starglass.api.args.Address;
 import com.starglass.api.domain.customer.Customer;
 import com.starglass.api.domain.merchant.Merchant;
 import com.starglass.api.domain.order.orderproduct.OrderProduct;
-import com.starglass.api.domain.payment.stripe.StripePayment;
+import com.starglass.api.domain.payment.Payment;
 import com.starglass.api.infra.entity.BaseMerchantEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -37,8 +37,8 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
     private Float discount = 0F;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private StripePayment payment;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Order() {
     }
@@ -52,7 +52,7 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
         this.installAddress = builder.installAddress;
         this.profitMargin = builder.profitMargin;
         this.discount = builder.discount;
-        this.payment = builder.payment.build(this);
+        this.payment = builder.payment.build(this.getMerchant());
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
         private Float discount = 0F;
 
-        private StripePayment.Builder payment;
+        private Payment.Builder payment;
 
         public Builder() {
         }

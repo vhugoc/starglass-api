@@ -17,7 +17,6 @@ public class ProductMaterial extends BaseMerchantEntity<ProductMaterial, Product
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @NotNull
     @JsonIgnore
     private Product product;
 
@@ -54,7 +53,6 @@ public class ProductMaterial extends BaseMerchantEntity<ProductMaterial, Product
     @Getter
     public static class Builder extends BaseMerchantEntity.Builder<ProductMaterial, Builder> {
 
-        @NotNull
         private Product product;
 
         @NotNull
@@ -77,22 +75,13 @@ public class ProductMaterial extends BaseMerchantEntity<ProductMaterial, Product
         }
 
         public ProductMaterial build() {
-            return new ProductMaterial(this);
+            throw new RuntimeException("Should build with product");
         }
 
-        public Builder withProduct(Product product) {
+        public ProductMaterial build(Product product) {
+            this.withMerchant(product.getMerchant());
             this.product = product;
-            return this;
-        }
-
-        public Builder withMaterial(Material material) {
-            this.material = material;
-            return this;
-        }
-
-        public Builder withQuantity(int quantity) {
-            this.quantity = quantity;
-            return this;
+            return new ProductMaterial(this);
         }
 
     }

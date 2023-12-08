@@ -1,6 +1,5 @@
 package com.starglass.api.domain.product.material;
 
-import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
 import com.starglass.api.domain.user.User;
 import com.starglass.api.infra.entity.EntityValidator;
@@ -8,8 +7,6 @@ import com.starglass.api.infra.exception.custom.ValidationException;
 import com.starglass.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class MaterialValidator implements EntityValidator<Material> {
@@ -43,9 +40,8 @@ public class MaterialValidator implements EntityValidator<Material> {
 
         if (isUpdate) queryBuilder.and(qMaterial.id.ne(entity.getId()));
 
-        List<Material> list = Lists.newArrayList(this.materialRepository.findAll(queryBuilder));
-
-        if (!list.isEmpty()) throw new ValidationException("This material already exists");
+        if (this.materialRepository.count(queryBuilder) > 0)
+            throw new ValidationException("This material already exists");
 
     }
 
