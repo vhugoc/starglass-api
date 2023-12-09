@@ -157,6 +157,16 @@ public class User extends BaseEntity<User, User.Builder> implements UserDetails 
             return this;
         }
 
+        public Builder withFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder withLastName(String lastName) {
+            this.firstName = lastName;
+            return this;
+        }
+
         public Builder withPassword(String password) {
             this.password = password;
             return this;

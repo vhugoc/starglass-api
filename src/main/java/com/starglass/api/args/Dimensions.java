@@ -11,6 +11,14 @@ public class Dimensions {
 
     private Float width;
 
+    public Dimensions() {
+    }
+
+    public Dimensions(Float width, Float height) {
+        this.width = width;
+        this.height = height;
+    }
+
     public Float getLargestDimension() {
         if (this.width > this.height) return this.width;
         return this.height;

@@ -68,6 +68,16 @@ public class Merchant extends BaseEntity<Merchant, Merchant.Builder> {
             return new Merchant(this);
         }
 
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
     }
 
 }

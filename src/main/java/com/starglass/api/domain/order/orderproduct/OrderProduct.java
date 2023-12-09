@@ -66,7 +66,7 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
 
         private Product product;
 
-        private Integer quantity;
+        private Integer quantity = 1;
 
         private Dimensions dimensions;
 
@@ -109,6 +109,21 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
 
         public Builder withUnitValue(Float unitValue) {
             this.unitValue = unitValue;
+            return this;
+        }
+
+        public Builder withProduct(Product product) {
+            this.product = product;
+            return this;
+        }
+
+        public Builder withQuantity(Integer quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public Builder withDimensions(Dimensions dimensions) {
+            this.dimensions = dimensions;
             return this;
         }
 
