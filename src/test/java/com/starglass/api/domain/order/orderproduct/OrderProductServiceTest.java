@@ -43,6 +43,7 @@ public class OrderProductServiceTest {
                 () -> Assertions.assertEquals(280F, orderProducts.get(0).getUnitValue(), 0.01),
                 () -> Assertions.assertEquals(productsQuantity * orderProducts.get(0).getUnitValue(), orderProducts.get(0).getTotalValue(), 0.01)
         );
+
     }
 
 }
