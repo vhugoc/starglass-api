@@ -91,6 +91,31 @@ public class Material extends BaseMerchantEntity<Material, Material.Builder> {
             return new Material(this);
         }
 
+        public Builder withType(MaterialType type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withColor(MaterialColor color) {
+            this.color = color;
+            return this;
+        }
+
+        public Builder withThickness(String thickness) {
+            this.thickness = thickness;
+            return this;
+        }
+
+        public Builder withValue(Float value) {
+            this.value = value;
+            return this;
+        }
+
     }
 
 }

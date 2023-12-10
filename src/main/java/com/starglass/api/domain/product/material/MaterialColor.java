@@ -2,6 +2,24 @@ package com.starglass.api.domain.product.material;
 
 public enum MaterialColor {
 
-    COLORLESS
+    TRANSPARENT,
+
+    FUME,
+
+    BRONZE,
+
+    GREEN,
+
+    BLUE,
+
+    BLACK,
+
+    WHITE,
+
+    BROWN,
+
+    GRAY,
+
+    CHROME
 
 }

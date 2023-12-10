@@ -12,7 +12,7 @@ import lombok.ToString;
 
 @Entity(name = "product_materials")
 @Getter
-@ToString
+@ToString(exclude = "product")
 public class ProductMaterial extends BaseMerchantEntity<ProductMaterial, ProductMaterial.Builder> {
 
     @ManyToOne
@@ -25,7 +25,7 @@ public class ProductMaterial extends BaseMerchantEntity<ProductMaterial, Product
     @NotNull
     private Material material;
 
-    private int quantity = 1;
+    private Integer quantity = 1;
 
     public ProductMaterial() {
     }
@@ -58,7 +58,7 @@ public class ProductMaterial extends BaseMerchantEntity<ProductMaterial, Product
         @NotNull
         private Material material;
 
-        private int quantity;
+        private Integer quantity;
 
         public Builder() {
         }
@@ -82,6 +82,16 @@ public class ProductMaterial extends BaseMerchantEntity<ProductMaterial, Product
             this.withMerchant(product.getMerchant());
             this.product = product;
             return new ProductMaterial(this);
+        }
+
+        public Builder withMaterial(Material material) {
+            this.material = material;
+            return this;
+        }
+
+        public Builder withQuantity(Integer quantity) {
+            this.quantity = quantity;
+            return this;
         }
 
     }

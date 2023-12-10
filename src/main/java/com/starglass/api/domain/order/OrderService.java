@@ -17,6 +17,10 @@ public class OrderService extends BaseMerchantServiceImpl<Order, Order.Builder> 
 
     @Override
     public Order.Builder beforeSave(Order.Builder builder) {
+        return this.calculatePaymentValues(builder);
+    }
+
+    public Order.Builder calculatePaymentValues(Order.Builder builder) {
         orderProductService.calculate(builder.getProducts());
         Float totalValue = builder.getTotalValue();
         if (builder.getProfitMargin() > 0)

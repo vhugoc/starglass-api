@@ -44,8 +44,8 @@ public class Product extends BaseMerchantEntity<Product, Product.Builder> {
         return new Builder(merchant);
     }
 
-    public static Builder of(Product material) {
-        return new Builder(material);
+    public static Builder of(Product product) {
+        return new Builder(product);
     }
 
     @Getter
@@ -73,6 +73,16 @@ public class Product extends BaseMerchantEntity<Product, Product.Builder> {
 
         public Product build() {
             return new Product(this);
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withMaterials(List<ProductMaterial.Builder> materials) {
+            this.materials = materials;
+            return this;
         }
 
     }
