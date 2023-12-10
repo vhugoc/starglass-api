@@ -9,6 +9,10 @@ import java.util.List;
 
 public class OrderProductProvider {
 
+    public static List<OrderProduct.Builder> provide(Product product, Integer quantity) {
+        return OrderProductProvider.provide(product, quantity, new Dimensions(1000F, 1000F));
+    }
+
     public static List<OrderProduct.Builder> provide(Product product, Integer quantity, Dimensions dimensions) {
         return ImmutableList.of(
                 OrderProduct.of(MerchantProvider.provide())

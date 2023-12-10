@@ -42,6 +42,10 @@ public class Payment extends BaseMerchantEntity<Payment, Payment.Builder> {
         return new Builder(this);
     }
 
+    public static Builder of() {
+        return new Builder();
+    }
+
     public static Builder of(Payment payment) {
         return new Builder(payment);
     }
@@ -83,6 +87,16 @@ public class Payment extends BaseMerchantEntity<Payment, Payment.Builder> {
         public Payment build(Merchant merchant) {
             this.withMerchant(merchant);
             return new Payment(this);
+        }
+
+        public Builder withStatus(PaymentStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder withType(PaymentType type) {
+            this.type = type;
+            return this;
         }
 
         public Builder withValue(Float value) {

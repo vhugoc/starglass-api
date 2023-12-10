@@ -21,14 +21,14 @@ public class OrderProductServiceTest {
     @MockBean
     private TokenService tokenService;
 
-    @Autowired
-    private OrderProductService orderProductService;
-
     @MockBean
     private ProductService productService;
 
+    @Autowired
+    private OrderProductService orderProductService;
+
     @Test
-    @DisplayName("Order Product Calculate")
+    @DisplayName("Order product - Calculate")
     public void testCalculate() {
         Integer productsQuantity = 2;
         Product product = ProductProvider.transparentDoor();

@@ -111,6 +111,46 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
             return new Order(this);
         }
 
+        public Builder withProducts(List<OrderProduct.Builder> products) {
+            this.products = products;
+            return this;
+        }
+
+        public Builder withCustomer(Customer customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public Builder withStatus(OrderStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder withInstallDate(LocalDateTime installDate) {
+            this.installDate = installDate;
+            return this;
+        }
+
+        public Builder withInstallAddress(Address address) {
+            this.installAddress = address;
+            return this;
+        }
+
+        public Builder withProfitMargin(Float profitMargin) {
+            this.profitMargin = profitMargin;
+            return this;
+        }
+
+        public Builder withDiscount(Float discount) {
+            this.discount = discount;
+            return this;
+        }
+
+        public Builder withPayment(Payment.Builder payment) {
+            this.payment = payment;
+            return this;
+        }
+
         public Float getTotalValue() {
             Float value = 0F;
             for (OrderProduct.Builder orderProduct : this.products) {
