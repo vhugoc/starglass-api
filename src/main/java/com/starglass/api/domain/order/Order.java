@@ -108,6 +108,7 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
         }
 
         public Order build() {
+            this.status.validate(this);
             return new Order(this);
         }
 

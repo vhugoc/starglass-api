@@ -36,6 +36,10 @@ public final class Address {
         this.state = builder.state;
     }
 
+    public static Builder of() {
+        return new Builder();
+    }
+
     public static Builder of(Address address) {
         return new Builder(address);
     }
@@ -71,6 +75,41 @@ public final class Address {
 
         public Address build() {
             return new Address(this);
+        }
+
+        public Builder withPostalCode(String postalCode) {
+            this.postalCode = postalCode;
+            return this;
+        }
+
+        public Builder withStreet(String street) {
+            this.street = street;
+            return this;
+        }
+
+        public Builder withNumber(String number) {
+            this.number = number;
+            return this;
+        }
+
+        public Builder withComplement(String complement) {
+            this.complement = complement;
+            return this;
+        }
+
+        public Builder withNeighborhood(String neighborhood) {
+            this.neighborhood = neighborhood;
+            return this;
+        }
+
+        public Builder withCity(String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder withState(String state) {
+            this.state = state;
+            return this;
         }
 
     }

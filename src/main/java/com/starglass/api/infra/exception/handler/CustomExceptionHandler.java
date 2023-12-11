@@ -1,5 +1,6 @@
 package com.starglass.api.infra.exception.handler;
 
+import com.starglass.api.infra.exception.custom.BuilderException;
 import com.starglass.api.infra.exception.custom.RestException;
 import com.starglass.api.infra.exception.custom.ValidationException;
 import com.starglass.api.infra.service.BaseServiceResponse;
@@ -27,6 +28,17 @@ public class CustomExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     @ResponseBody
     public ResponseEntity<BaseServiceResponse<?>> handleValidationException(ValidationException ex) {
+        BaseServiceResponse<?> response = BaseServiceResponse.<Object>builder()
+                .withStatusCode(HttpStatus.BAD_REQUEST)
+                .withMessage(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(BuilderException.class)
+    @ResponseBody
+    public ResponseEntity<BaseServiceResponse<?>> handleBuilderException(BuilderException ex) {
         BaseServiceResponse<?> response = BaseServiceResponse.<Object>builder()
                 .withStatusCode(HttpStatus.BAD_REQUEST)
                 .withMessage(ex.getMessage())
