@@ -152,6 +152,25 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
             return this;
         }
 
+        public Builder profitMargin() {
+            Float value = this.getTotalValue();
+            this.getPayment().withValue(value);
+            if (this.getProfitMargin() > 0) {
+                Float valueWithProfitMargin = value + (value * (this.getProfitMargin() / 100));
+                this.getPayment().withValue(valueWithProfitMargin);
+            }
+            return this;
+        }
+
+        public Builder discount() {
+            if (this.getDiscount() > 0) {
+                Float value = this.getPayment().getValue() != null ? this.getPayment().getValue() : this.getTotalValue();
+                Float valueWithDiscount = value - (value * (this.getDiscount() / 100));
+                this.getPayment().withValue(valueWithDiscount);
+            }
+            return this;
+        }
+
         public Float getTotalValue() {
             Float value = 0F;
             for (OrderProduct.Builder orderProduct : this.products) {

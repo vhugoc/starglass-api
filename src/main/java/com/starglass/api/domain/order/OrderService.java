@@ -22,13 +22,8 @@ public class OrderService extends BaseMerchantServiceImpl<Order, Order.Builder> 
 
     public Order.Builder calculatePaymentValues(Order.Builder builder) {
         orderProductService.calculate(builder.getProducts());
-        Float totalValue = builder.getTotalValue();
-        if (builder.getProfitMargin() > 0)
-            totalValue = calculateProfitMargin(totalValue, builder.getProfitMargin());
-        if (builder.getDiscount() > 0)
-            totalValue = calculateDiscount(totalValue, builder.getDiscount());
+        builder.profitMargin().discount();
         builder.getPayment().withRawValue(builder.getTotalValue());
-        builder.getPayment().withValue(totalValue);
         return builder;
     }
 

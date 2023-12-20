@@ -85,7 +85,7 @@ public class OrderServiceTest {
         applyMocks();
         orderProductService.calculate(orderBuilder.getProducts());
 
-        Float valueWithProfitMargin = orderService.calculateProfitMargin(orderBuilder.getTotalValue(), orderBuilder.getProfitMargin());
+        Float valueWithProfitMargin = orderBuilder.profitMargin().getPayment().getValue();
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(560F, orderBuilder.getTotalValue()),
@@ -101,7 +101,7 @@ public class OrderServiceTest {
         applyMocks();
         orderProductService.calculate(orderBuilder.getProducts());
 
-        Float valueWithDiscount = orderService.calculateDiscount(orderBuilder.getTotalValue(), orderBuilder.getDiscount());
+        Float valueWithDiscount = orderBuilder.discount().getPayment().getValue();
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(560F, orderBuilder.getTotalValue()),
