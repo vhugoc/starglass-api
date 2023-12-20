@@ -27,12 +27,4 @@ public class OrderService extends BaseMerchantServiceImpl<Order, Order.Builder> 
         return builder;
     }
 
-    public Float calculateDiscount(Float value, Float discount) {
-        return value - ((discount / 100) * value);
-    }
-
-    public Float calculateProfitMargin(Float value, Float profit) {
-        return value + ((profit / 100) * value);
-    }
-
 }
