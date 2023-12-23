@@ -3,8 +3,10 @@ package com.starglass.api.infra.service;
 import com.starglass.api.domain.user.User;
 import com.starglass.api.infra.entity.BaseMerchantEntity;
 import com.starglass.api.infra.repository.BaseMerchantRepository;
+import com.starglass.api.args.Pagination;
 import com.starglass.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -23,6 +25,16 @@ public class BaseMerchantServiceImpl<T extends BaseMerchantEntity, B extends Bas
         String merchantId = tokenService.getAuthenticatedUserFromContext().getMerchant().getId();
         List<T> list = repository.findAllByMerchantIdAndIsActiveTrue(merchantId);
         return BaseServiceResponse.<List<T>>builder()
+                .withStatusCode(HttpStatus.OK)
+                .withData(list)
+                .build();
+    }
+
+    @Override
+    public BaseServiceResponse<PageImpl<T>>findAll(Pagination pagination) {
+        String merchantId = tokenService.getAuthenticatedUserFromContext().getMerchant().getId();
+        PageImpl<T> list = repository.findAllByMerchantIdAndIsActiveTrue(merchantId, pagination.pageable());
+        return BaseServiceResponse.<PageImpl<T>>builder()
                 .withStatusCode(HttpStatus.OK)
                 .withData(list)
                 .build();

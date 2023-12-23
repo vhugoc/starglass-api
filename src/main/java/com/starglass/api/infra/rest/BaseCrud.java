@@ -1,9 +1,11 @@
 package com.starglass.api.infra.rest;
 
+import com.starglass.api.args.Pagination;
 import com.starglass.api.infra.entity.BaseEntity;
 import com.starglass.api.infra.service.BaseService;
 import com.starglass.api.infra.service.BaseServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,13 @@ public abstract class BaseCrud<T extends BaseEntity, B extends BaseEntity.Builde
     @GetMapping
     public ResponseEntity<BaseServiceResponse> findAll() {
         BaseServiceResponse<List<T>> entities = service.findAll();
+        return ResponseEntity.ok(entities);
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<BaseServiceResponse> findAllPaged(@RequestParam int page,
+                                                            @RequestParam int size) {
+        BaseServiceResponse<PageImpl<T>> entities = service.findAll(Pagination.of(page, size));
         return ResponseEntity.ok(entities);
     }
 

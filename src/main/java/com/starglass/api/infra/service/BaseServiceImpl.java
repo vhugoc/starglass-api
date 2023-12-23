@@ -5,8 +5,10 @@ import com.starglass.api.infra.entity.EntityValidator;
 import com.starglass.api.infra.exception.custom.RestException;
 import com.starglass.api.infra.exception.custom.ValidationException;
 import com.starglass.api.infra.repository.BaseRepository;
+import com.starglass.api.args.Pagination;
 import com.starglass.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -27,6 +29,15 @@ public class BaseServiceImpl<T extends BaseEntity, B extends BaseEntity.Builder>
     public BaseServiceResponse<List<T>> findAll() {
         List<T> list = repository.findAllByIsActiveTrue();
         return BaseServiceResponse.<List<T>>builder()
+                .withStatusCode(HttpStatus.OK)
+                .withData(list)
+                .build();
+    }
+
+    @Override
+    public BaseServiceResponse<PageImpl<T>> findAll(Pagination pagination) {
+        PageImpl<T> list = repository.findAllByIsActiveTrue(pagination.pageable());
+        return BaseServiceResponse.<PageImpl<T>>builder()
                 .withStatusCode(HttpStatus.OK)
                 .withData(list)
                 .build();

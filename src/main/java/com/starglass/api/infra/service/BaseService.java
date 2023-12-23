@@ -1,6 +1,8 @@
 package com.starglass.api.infra.service;
 
 import com.starglass.api.infra.entity.BaseEntity;
+import com.starglass.api.args.Pagination;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,8 @@ public interface BaseService<T extends BaseEntity, B extends BaseEntity.Builder>
     T afterSave(T saved);
 
     BaseServiceResponse<List<T>> findAll();
+
+    BaseServiceResponse<PageImpl<T>> findAll(Pagination pagination);
 
     BaseServiceResponse<T> findById(String id);
 
