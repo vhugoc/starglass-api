@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class OrderProvider {
 
-    public static Order provide(Float profitMargin, Float discount) {
+    public static Order provide(Double profitMargin, Double discount) {
         return Order.of(MerchantProvider.provide())
                 .withId(UUID.randomUUID().toString())
                 .withProducts(OrderProductProvider.provide(ProductProvider.transparentDoor(), 2))

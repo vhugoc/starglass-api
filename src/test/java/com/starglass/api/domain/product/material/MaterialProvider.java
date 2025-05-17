@@ -13,7 +13,7 @@ public class MaterialProvider {
                 .withName("Vidro Incolor 10mm")
                 .withColor(MaterialColor.TRANSPARENT)
                 .withThickness("10")
-                .withValue(100F).build();
+                .withValue(100.0).build();
     }
 
     public static Material aluminium() {
@@ -22,7 +22,7 @@ public class MaterialProvider {
                 .withType(MaterialType.ALUMINIUM)
                 .withName("Perfil Preto")
                 .withColor(MaterialColor.BLACK)
-                .withValue(30F).build();
+                .withValue(30.0).build();
     }
 
     public static Material glass() {
@@ -30,7 +30,7 @@ public class MaterialProvider {
                 .withId(UUID.randomUUID().toString())
                 .withType(MaterialType.GLASS)
                 .withName("Espelho Jateado")
-                .withValue(120F).build();
+                .withValue(120.0).build();
     }
 
     public static Material unitary() {
@@ -39,7 +39,7 @@ public class MaterialProvider {
                 .withType(MaterialType.UNITARY)
                 .withName("Kit Pivotante Cromado")
                 .withColor(MaterialColor.CHROME)
-                .withValue(150F).build();
+                .withValue(150.0).build();
     }
 
 }

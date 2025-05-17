@@ -29,9 +29,9 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
 
     private Dimensions dimensions;
 
-    private Float unitValue;
+    private Double unitValue;
 
-    private Float totalValue;
+    private Double totalValue;
 
     public OrderProduct() {
     }
@@ -70,9 +70,9 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
 
         private Dimensions dimensions;
 
-        private Float unitValue;
+        private Double unitValue;
 
-        private Float totalValue;
+        private Double totalValue;
 
         public Builder() {
         }
@@ -99,7 +99,7 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
             return new OrderProduct(this);
         }
 
-        public void sumUnitValue(Float value) {
+        public void sumUnitValue(Double value) {
             this.unitValue += value;
         }
 
@@ -107,7 +107,7 @@ public class OrderProduct extends BaseMerchantEntity<OrderProduct, OrderProduct.
             this.totalValue = this.unitValue * this.quantity;
         }
 
-        public Builder withUnitValue(Float unitValue) {
+        public Builder withUnitValue(Double unitValue) {
             this.unitValue = unitValue;
             return this;
         }

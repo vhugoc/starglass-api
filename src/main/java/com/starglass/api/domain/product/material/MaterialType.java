@@ -7,14 +7,14 @@ public enum MaterialType {
 
     DEFAULT_GLASS {
         @Override
-        public Float calculate(ProductMaterial productMaterial, Dimensions dimensions) {
+        public Double calculate(ProductMaterial productMaterial, Dimensions dimensions) {
             return calculateSquareMeter(productMaterial, dimensions);
         }
     },
 
     ALUMINIUM {
         @Override
-        public Float calculate(ProductMaterial productMaterial, Dimensions dimensions) {
+        public Double calculate(ProductMaterial productMaterial, Dimensions dimensions) {
             Float linearMeters = dimensions.getLargestDimension();
             return productMaterial.getQuantity()
                     * (linearMeters / 1000)
@@ -24,21 +24,21 @@ public enum MaterialType {
 
     GLASS {
         @Override
-        public Float calculate(ProductMaterial productMaterial, Dimensions dimensions) {
+        public Double calculate(ProductMaterial productMaterial, Dimensions dimensions) {
             return calculateSquareMeter(productMaterial, dimensions);
         }
     },
 
     UNITARY {
         @Override
-        public Float calculate(ProductMaterial productMaterial, Dimensions dimensions) {
+        public Double calculate(ProductMaterial productMaterial, Dimensions dimensions) {
             return productMaterial.getQuantity() * productMaterial.getMaterial().getValue();
         }
     };
 
-    public abstract Float calculate(ProductMaterial productMaterial, Dimensions dimensions);
+    public abstract Double calculate(ProductMaterial productMaterial, Dimensions dimensions);
 
-    public Float calculateSquareMeter(ProductMaterial productMaterial, Dimensions dimensions) {
+    public Double calculateSquareMeter(ProductMaterial productMaterial, Dimensions dimensions) {
         return productMaterial.getQuantity()
                 * ((dimensions.getWidth() / 1000) * (dimensions.getHeight() / 1000))
                 * productMaterial.getMaterial().getValue();

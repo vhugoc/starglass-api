@@ -33,9 +33,9 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
     private Address installAddress;
 
-    private Float profitMargin = 0F;
+    private Double profitMargin = 0.0;
 
-    private Float discount = 0F;
+    private Double discount = 0.0;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Payment payment;
@@ -82,9 +82,9 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
         private Address installAddress;
 
-        private Float profitMargin = 0F;
+        private Double profitMargin = 0.0;
 
-        private Float discount = 0F;
+        private Double discount = 0.0;
 
         private Payment.Builder payment;
 
@@ -137,12 +137,12 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
             return this;
         }
 
-        public Builder withProfitMargin(Float profitMargin) {
+        public Builder withProfitMargin(Double profitMargin) {
             this.profitMargin = profitMargin;
             return this;
         }
 
-        public Builder withDiscount(Float discount) {
+        public Builder withDiscount(Double discount) {
             this.discount = discount;
             return this;
         }
@@ -153,10 +153,10 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
         }
 
         public Builder profitMargin() {
-            Float value = this.getTotalValue();
+            Double value = this.getTotalValue();
             this.getPayment().withValue(value);
             if (this.getProfitMargin() > 0) {
-                Float valueWithProfitMargin = value + (value * (this.getProfitMargin() / 100));
+                Double valueWithProfitMargin = value + (value * (this.getProfitMargin() / 100));
                 this.getPayment().withValue(valueWithProfitMargin);
             }
             return this;
@@ -164,15 +164,15 @@ public class Order extends BaseMerchantEntity<Order, Order.Builder> {
 
         public Builder discount() {
             if (this.getDiscount() > 0) {
-                Float value = this.getPayment().getValue() != null ? this.getPayment().getValue() : this.getTotalValue();
-                Float valueWithDiscount = value - (value * (this.getDiscount() / 100));
+                Double value = this.getPayment().getValue() != null ? this.getPayment().getValue() : this.getTotalValue();
+                Double valueWithDiscount = value - (value * (this.getDiscount() / 100));
                 this.getPayment().withValue(valueWithDiscount);
             }
             return this;
         }
 
-        public Float getTotalValue() {
-            Float value = 0F;
+        public Double getTotalValue() {
+            Double value = 0.0;
             for (OrderProduct.Builder orderProduct : this.products) {
                 value += orderProduct.getTotalValue();
             }

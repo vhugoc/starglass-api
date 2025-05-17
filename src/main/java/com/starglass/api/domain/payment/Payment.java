@@ -19,9 +19,9 @@ public class Payment extends BaseMerchantEntity<Payment, Payment.Builder> {
     @NotNull
     private PaymentType type;
 
-    private Float value;
+    private Double value;
 
-    private Float rawValue;
+    private Double rawValue;
 
     private String link;
 
@@ -60,10 +60,10 @@ public class Payment extends BaseMerchantEntity<Payment, Payment.Builder> {
         protected PaymentType type;
 
         @NotEmpty
-        protected Float value;
+        protected Double value;
 
         @NotEmpty
-        private Float rawValue;
+        private Double rawValue;
 
         protected String link;
 
@@ -99,12 +99,12 @@ public class Payment extends BaseMerchantEntity<Payment, Payment.Builder> {
             return this;
         }
 
-        public Builder withValue(Float value) {
+        public Builder withValue(Double value) {
             this.value = value;
             return this;
         }
 
-        public Builder withRawValue(Float rawValue) {
+        public Builder withRawValue(Double rawValue) {
             this.rawValue = rawValue;
             return this;
         }

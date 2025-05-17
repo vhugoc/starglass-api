@@ -28,7 +28,7 @@ public class Material extends BaseMerchantEntity<Material, Material.Builder> {
     private String thickness;
 
     @NotNull
-    private Float value;
+    private Double value;
 
     public Material() {
     }
@@ -69,7 +69,7 @@ public class Material extends BaseMerchantEntity<Material, Material.Builder> {
         private String thickness;
 
         @NotNull
-        private Float value;
+        private Double value;
 
         public Builder() {
         }
@@ -111,7 +111,7 @@ public class Material extends BaseMerchantEntity<Material, Material.Builder> {
             return this;
         }
 
-        public Builder withValue(Float value) {
+        public Builder withValue(Double value) {
             this.value = value;
             return this;
         }

@@ -22,7 +22,7 @@ public class OrderProductService extends BaseMerchantServiceImpl<OrderProduct, O
     public void calculate(List<OrderProduct.Builder> orderProducts) {
         for (OrderProduct.Builder orderProduct : orderProducts) {
             List<ProductMaterial> productMaterials = productService.findAllProductMaterials(orderProduct.getProduct().getId());
-            orderProduct.withUnitValue(0F);
+            orderProduct.withUnitValue(0.0);
             for (ProductMaterial productMaterial : productMaterials) {
                 Material material = productMaterial.getMaterial();
                 orderProduct.sumUnitValue(material.getType().calculate(productMaterial, orderProduct.getDimensions()));

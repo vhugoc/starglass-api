@@ -32,81 +32,81 @@ public class OrderServiceTest {
     @Test
     @DisplayName("Order - Calculate payment values")
     public void testCalculatePaymentValues() {
-        Order.Builder orderBuilder = OrderProvider.provide(50F, 10F).toBuilder();
+        Order.Builder orderBuilder = OrderProvider.provide(50.0, 10.0).toBuilder();
         applyMocks();
 
         orderService.calculatePaymentValues(orderBuilder);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(560F, orderBuilder.getPayment().getRawValue()),
-                () -> Assertions.assertEquals(50F, orderBuilder.getProfitMargin()),
-                () -> Assertions.assertEquals(10F, orderBuilder.getDiscount()),
-                () -> Assertions.assertEquals(756F, orderBuilder.getPayment().getValue())
+                () -> Assertions.assertEquals(560.0, orderBuilder.getPayment().getRawValue()),
+                () -> Assertions.assertEquals(50.0, orderBuilder.getProfitMargin()),
+                () -> Assertions.assertEquals(10.0, orderBuilder.getDiscount()),
+                () -> Assertions.assertEquals(756.0, orderBuilder.getPayment().getValue())
         );
     }
 
     @Test
     @DisplayName("Order - Calculate payment with no products")
     public void testCalculatePaymentWithNoProducts() {
-        Order.Builder orderBuilder = OrderProvider.provide(50F, 10F).toBuilder();
+        Order.Builder orderBuilder = OrderProvider.provide(50.0, 10.0).toBuilder();
         applyMocks();
         orderBuilder.withProducts(Lists.newLinkedList());
 
         orderService.calculatePaymentValues(orderBuilder);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(0F, orderBuilder.getPayment().getRawValue()),
-                () -> Assertions.assertEquals(50F, orderBuilder.getProfitMargin()),
-                () -> Assertions.assertEquals(10F, orderBuilder.getDiscount()),
-                () -> Assertions.assertEquals(0F, orderBuilder.getPayment().getValue())
+                () -> Assertions.assertEquals(0.0, orderBuilder.getPayment().getRawValue()),
+                () -> Assertions.assertEquals(50.0, orderBuilder.getProfitMargin()),
+                () -> Assertions.assertEquals(10.0, orderBuilder.getDiscount()),
+                () -> Assertions.assertEquals(0.0, orderBuilder.getPayment().getValue())
         );
     }
 
     @Test
     @DisplayName("Order - Calculate payment with no discount and profit")
     public void testCalculatePaymentWithNoDiscountAndProfit() {
-        Order.Builder orderBuilder = OrderProvider.provide(0F, 0F).toBuilder();
+        Order.Builder orderBuilder = OrderProvider.provide(0.0, 0.0).toBuilder();
         applyMocks();
 
         orderService.calculatePaymentValues(orderBuilder);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(560F, orderBuilder.getPayment().getRawValue()),
-                () -> Assertions.assertEquals(0F, orderBuilder.getProfitMargin()),
-                () -> Assertions.assertEquals(0F, orderBuilder.getDiscount()),
-                () -> Assertions.assertEquals(560F, orderBuilder.getPayment().getValue())
+                () -> Assertions.assertEquals(560.0, orderBuilder.getPayment().getRawValue()),
+                () -> Assertions.assertEquals(0.0, orderBuilder.getProfitMargin()),
+                () -> Assertions.assertEquals(0.0, orderBuilder.getDiscount()),
+                () -> Assertions.assertEquals(560.0, orderBuilder.getPayment().getValue())
         );
     }
 
     @Test
     @DisplayName("Order - Calculate profit margin")
     public void testCalculateProfitMargin() {
-        Order.Builder orderBuilder = OrderProvider.provide(50F, 10F).toBuilder();
+        Order.Builder orderBuilder = OrderProvider.provide(50.0, 10.0).toBuilder();
         applyMocks();
         orderProductService.calculate(orderBuilder.getProducts());
 
-        Float valueWithProfitMargin = orderBuilder.profitMargin().getPayment().getValue();
+        Double valueWithProfitMargin = orderBuilder.profitMargin().getPayment().getValue();
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(560F, orderBuilder.getTotalValue()),
-                () -> Assertions.assertEquals(50F, orderBuilder.getProfitMargin()),
-                () -> Assertions.assertEquals(840F, valueWithProfitMargin)
+                () -> Assertions.assertEquals(560.0, orderBuilder.getTotalValue()),
+                () -> Assertions.assertEquals(50.0, orderBuilder.getProfitMargin()),
+                () -> Assertions.assertEquals(840.0, valueWithProfitMargin)
         );
     }
 
     @Test
     @DisplayName("Order - Calculate discount")
     public void testCalculateDiscount() {
-        Order.Builder orderBuilder = OrderProvider.provide(50F, 10F).toBuilder();
+        Order.Builder orderBuilder = OrderProvider.provide(50.0, 10.0).toBuilder();
         applyMocks();
         orderProductService.calculate(orderBuilder.getProducts());
 
-        Float valueWithDiscount = orderBuilder.discount().getPayment().getValue();
+        Double valueWithDiscount = orderBuilder.discount().getPayment().getValue();
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(560F, orderBuilder.getTotalValue()),
-                () -> Assertions.assertEquals(10F, orderBuilder.getDiscount()),
-                () -> Assertions.assertEquals(504F, valueWithDiscount)
+                () -> Assertions.assertEquals(560.0, orderBuilder.getTotalValue()),
+                () -> Assertions.assertEquals(10.0, orderBuilder.getDiscount()),
+                () -> Assertions.assertEquals(504.0, valueWithDiscount)
         );
     }
 
